@@ -1,0 +1,76 @@
+server:
+  port: 7000
+
+spring:
+  application:
+    name: iam-service
+
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:7294/jso_payroll_db?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:Jusp.020794}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+        jdbc:
+          time_zone: UTC
+
+# --- JWT SETTINGS (MOVED TO ROOT LEVEL) ---
+jwt:
+  private-key: |
+    -----BEGIN PRIVATE KEY-----
+    MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDEFah3r0TYtmuh
+    b7m/qbTxfr4a73C8uVHFNN0tu1jv2ONSl25GMD7siBFvwh5QW1fFlu0gER5xaCQX
+    LctNDTeLg7eMqElRtHaxq3mzDH41XvZlVZkGQ8h1/JropyMwrWIsDoeddeANbVCx
+    6HvT37Beo3LhM+XWumN2jVlIG2GTzh0zQhwnfCDr/0cVVnpf0oXDwn7bXEXvk8Kc
+    l+PhabzxGqGETj1bhapgKkNadUom8u1bjlobbMH6HYQc3+KNqe5Us1YF9i1UkfdE
+    6/+y1WGpc3B0a5vC7YgUc2DQkAQrvTy5yGcbtZzPxzdW7QYXweJpZnCoyDcViEtL
+    jMjvetLfAgMBAAECggEAWX4lCJLm0h3X27NZTH+RBNM6wqJbitbt2hq5g8DI45bS
+    kYRpoQEuBthHVQF8wmIeGiE7EnKduVa1ehq9eeo5WqSAJmM8K104+vfvMGfYRlWU
+    EUXS9IgFOsxSizKVHgdUEhWDkbsVyisFNF2N/nJOVbM1oFEGak1hTd9PS1ir3T/d
+    Zhn/5zWgK2Ng509Q9wkRuOPRMVw6yhAt6kvd4zUoeqovwhVa9oXVz8NOpKQkvaGr
+    u9KKqDDaQ7E53kheJDYCWD2n1hM6323ud2KUQRtdC6XtTf7i0B9gKd66aj2oaUnv
+    i6Q86VIJm/1UtWzW7bp2eGHphHkGAzJ3I5cWH+ZduQKBgQDXBoLHTtEDSi8kJACF
+    VeVnYMwaLV53n4EkdfjcIqeAJuMehgExFWGJRhNTyhvSO9vZCil0FITuwC3zELVF
+    z0/2YDDDxDiizE0uf9BRrf7TSn6C0G7d6eiPQ11e7dJR6/SONSau9CEn3nfPxEoQ
+    5JoWPMtALdw5SmRha+E2uJTTswKBgQDpcypH/UcyrYimyuNaf9tK/rfUC1RKYKa3
+    1w+pV39RyTWzwje+sLC/DEzrtn9fKx1MZie+CvvU3WucqEi8QHfrWsLYv65z2sbG
+    aeFa6pd+gMFhJlf0HCcGT86vYT8ziaa7DTsWQvWvPGEW6K5oBwGW90pniP8OWk55
+    JXKSjpHeJQKBgFt5QZlYRkKIBJXzWuVeLUFVRH6+Xjm1eVLxfPTpKSizYltR1p/y
+    4JNtZDt492zwWg5y7D+dmw+WYfXNXdBc6T9+nEAr8YwQLaVialTVGFr6jedIlGGD
+    aJPJrKb9tUN0hY0Zv2MeKBy133JbpsaY+ZQMOMsMt2sH4rwvEJge3fFRAoGAMWyb
+    cABUeYs52i4sMjXNhLQm0TLQ1qpdwaA7hZurrfIOd49P5ARedyQwiNrrXoevPUSH
+    d3m11VxHczRBqfFwMhjWFbOHSKnx2YIDHw95oWO7DUlj55+qN3DgDktlaRDkhseH
+    UfA9Oatr1sDOY+HP2VljnEXp0e0Wnhlqh1K92S0CgYEAjJKGjcBM8PIWt1Xbl7EI
+    zBZcnIe3mtLpForuolwrucvPLYXO7JHOg6vifU802vLNa6PA9Ychy/xTSPteArPb
+    SZv2mgEV3J/KRT60I4jRt7wQeZ9qn5DEJYM9doNNB+IiKNh+fKva+U2x4XS6BxJ2
+    xeGrVeNVsIerIiTXuWKBmD4=
+    -----END PRIVATE KEY-----
+
+  public-key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxBWod69E2LZroW+5v6m0
+    8X6+Gu9wvLlRxTTdLbtY79jjUpduRjA+7IgRb8IeUFtXxZbtIBEecWgkFy3LTQ03
+    i4O3jKhJUbR2sat5swx+NV72ZVWZBkPIdfya6KcjMK1iLA6HnXXgDW1Qseh709+w
+    XqNy4TPl1rpjdo1ZSBthk84dM0IcJ3wg6/9HFVZ6X9KFw8J+21xF75PCnJfj4Wm8
+    8RqhhE49W4WqYCpDWnVKJvLtW45aG2zB+h2EHN/ijanuVLNWBfYtVJH3ROv/stVh
+    qXNwdGubwu2IFHNg0JAEK708uchnG7Wcz8c3Vu0GF8HiaWZwqMg3FYhLS4zI73rS
+    3wIDAQAB
+    -----END PUBLIC KEY-----
+
+  expiration: 86400000
+  refresh-expiration: 604800000
+
+logging:
+  level:
+    com.jso.IamService_payRoll: DEBUG
+    org.hibernate.SQL: DEBUG
