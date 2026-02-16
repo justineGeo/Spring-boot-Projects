@@ -1,0 +1,39 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: employee-service
+
+  # --- Database Configuration ---
+  datasource:
+    # Double-check that your MySQL is actually running on port 7294
+    url: jdbc:mysql://localhost:7294/jso_payroll_db?createDatabaseIfNotExist=true
+    username: root
+    password: Jusp.020794
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  # --- JPA / Hibernate Configuration ---
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true # Set to true to verify table creation in console
+    properties:
+      hibernate:
+        # Fixed: Using the modern version-less dialect for Hibernate 7
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+
+  # --- Security Configuration (OAuth2 Resource Server) ---
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # Link to your physical key file in src/main/resources
+          public-key-location: "classpath:public.pem"
+
+# --- Logging for Debugging ---
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

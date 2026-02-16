@@ -1,0 +1,44 @@
+spring:
+  application:
+    name: APIGateway
+
+server:
+  port: 8090
+
+  cloud:
+    gateway:
+      routes:
+        # 1. Route to IAM Service (Public Login/Signup)
+        - id: iam-service
+          uri: http://localhost:7000
+          predicates:
+            # Combined into one line with a comma for "OR" logic
+            - Path=/vi/auth/**, /auth/organizations/**
+
+        # 2. Route to Employee Service (Protected)
+        - id: employee-service
+          uri: http://localhost:8085
+          predicates:
+            # FIX: Use a comma to allow EITHER employees OR departments
+            - Path=/api/v1/employees/**, /api/v1/departments/**
+          filters:
+            - name: AuthFilter
+
+# --- JWT SETTINGS ---
+jwt:
+  public-key: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxBWod69E2LZroW+5v6m0
+    8X6+Gu9wvLlRxTTdLbtY79jjUpduRjA+7IgRb8IeUFtXxZbtIBEecWgkFy3LTQ03
+    i4O3jKhJUbR2sat5swx+NV72ZVWZBkPIdfya6KcjMK1iLA6HnXXgDW1Qseh709+w
+    XqNy4TPl1rpjdo1ZSBthk84dM0IcJ3wg6/9HFVZ6X9KFw8J+21xF75PCnJfj4Wm8
+    8RqhhE49W4WqYCpDWnVKJvLtW45aG2zB+h2EHN/ijanuVLNWBfYtVJH3ROv/stVh
+    qXNwdGubwu2IFHNg0JAEK708uchnG7Wcz8c3Vu0GF8HiaWZwqMg3FYhLS4zI73rS
+    3wIDAQAB
+    -----END PUBLIC KEY-----
+  issuer: iam-service
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    io.jsonwebtoken: DEBUG
