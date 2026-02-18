@@ -7,7 +7,6 @@ spring:
 
   # --- Database Configuration ---
   datasource:
-    # Double-check that your MySQL is actually running on port 7294
     url: jdbc:mysql://localhost:7294/jso_payroll_db?createDatabaseIfNotExist=true
     username: root
     password: Jusp.020794
@@ -17,22 +16,28 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true # Set to true to verify table creation in console
+    show-sql: true
     properties:
       hibernate:
-        # Fixed: Using the modern version-less dialect for Hibernate 7
+        # Professional standard for MySQL 8+ and Hibernate 6+
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
-  # --- Security Configuration (OAuth2 Resource Server) ---
+  # --- Security Configuration ---
   security:
     oauth2:
       resourceserver:
         jwt:
-          # Link to your physical key file in src/main/resources
           public-key-location: "classpath:public.pem"
 
-# --- Logging for Debugging ---
+# --- NEW: Service Discovery Link ---
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
 logging:
   level:
     org.hibernate.SQL: DEBUG

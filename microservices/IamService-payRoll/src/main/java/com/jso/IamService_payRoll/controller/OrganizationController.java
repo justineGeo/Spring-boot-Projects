@@ -15,12 +15,12 @@ public class OrganizationController {
 
     private final OrganizationService service;
 
-    @PostMapping
+    @PostMapping("/createOrganization")
     public ResponseEntity<OrganizationResponse> create(@RequestBody OrganizationRequest request) {
         return ResponseEntity.ok(service.create(request));
     }
 
-    @GetMapping
+    @GetMapping("/getAllOrganization")
     public ResponseEntity<List<OrganizationResponse>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
